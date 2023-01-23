@@ -1,30 +1,32 @@
 import React from 'react'
+import { useState } from 'react';
 
-function User({ id, name, surname, age, ChangeItem }) {
-    const [Edit, setEdit] = React.useState(false);
-  return (
-    <>
-      {Edit ? (
+function User({ user, banUser, setUser }) {
+    const [edit, setEdit] = React.useState(false);
+    const [name, setName] = useState(user.name)
+    const [surname, setSurname] = useState(user.surname)
+    const [age, setAge] = useState(user.age)
+
+  return edit ? (
         <p>
           Имя:
-          <input type="text" value={name} onChange={(event) => ChangeItem(id, 'name', event)} />
+          <input type="text" value={name} onChange={(event) => setName(event.target.value)} />
           Фамилия:
           <input
             type="text"
             value={surname}
-            onChange={(event) => ChangeItem(id, 'surname', event)}
+            onChange={(event) => setSurname(event.target.value)}
           />
           Возраст:{' '}
-          <input type="number" value={age} onChange={(event) => ChangeItem(id, 'age', event)} />
-          <button onClick={() => setEdit(false)}>Сохранить</button>
+          <input type="number" value={age} onChange={(event) => setAge(event.target.value)} />
+          <button onClick={() => {setUser({...user, name: name, surname: surname, age: age}, user.id); setEdit(false)}}>Сохранить</button>
         </p>
       ) : (
-        <span onClick={() => setEdit(true)}>
-          {name} {surname} {age}
-        </span>
-      )}
-    </>
-  );
+        <div>
+          <span onClick={() => setEdit(true)}>{user.name} {user.surname} {user.age} </span>
+          {user.banned ? 'Забанен' : ''} <button onClick={() => banUser(user.id)}>Забанить</button>
+        </div>
+      )
 }
 
 export default User

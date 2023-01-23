@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import User from "./User";
+import User from "./User"
 
 const Users = () => {
     const [users, setUsers] = useState([
@@ -33,7 +33,7 @@ const Users = () => {
     return (
         <div>
             {users.map((item) => (
-                <User user={item} banUser={banUser} setUser={setUser} />
+                <User user={item} banUser={banUser} setUser={setUser}key={item.id}/>
             ))}
         </div>
     );
